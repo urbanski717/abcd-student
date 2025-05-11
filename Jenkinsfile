@@ -28,7 +28,7 @@ pipeline {
                     sleep 5
                 '''
                 sh '''
-                    docker run --name zap --user root \
+                    docker run --name zap \
                         --add-host=host.docker.internal:host-gateway \
                         -v /home/ubuntu/abc/abcd-student/:/zap/wrk/:rw \
                         -t ghcr.io/zaproxy/zaproxy:stable bash -c "\
