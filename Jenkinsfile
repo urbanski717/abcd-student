@@ -28,6 +28,7 @@ pipeline {
                     sleep 5
                 '''
                 sh 'ls $(pwd)/automation'
+                sh 'ls -l /var/jenkins_home/workspace/test/automation/passive_scan.yaml'
                 sh '''
                     docker run --name zap \
                         --add-host=host.docker.internal:host-gateway \
