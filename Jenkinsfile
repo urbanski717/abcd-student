@@ -30,7 +30,7 @@ pipeline {
                 sh '''
                     docker run --name zap \
                         --add-host=host.docker.internal:host-gateway \
-                        -v /home/ubuntu/abc/abcd-student/:/zap/wrk/ :rw \
+                        -v /home/ubuntu/abc/abcd-student/:/zap/wrk/:rw \
                         -t ghcr.io/zaproxy/zaproxy:stable bash -c "\
                         zap.sh -cmd -addonupdate;\
                         zap.sh -cmd -addoninstall communityScripts\
