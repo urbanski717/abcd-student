@@ -12,6 +12,12 @@ pipeline {
                 }
             }
         }
+        stage('Example') {
+            steps {
+                echo 'Hello!'
+                sh 'pwd'
+            }
+
         stage('[ZAP] Baseline passive-scan') {
             steps {
                 sh 'mkdir -p results/'
