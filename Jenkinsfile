@@ -17,7 +17,6 @@ pipeline {
                 echo 'Hello!'
                 sh 'pwd'
             }
-
         stage('[ZAP] Baseline passive-scan') {
             steps {
                 sh 'mkdir -p results/'
@@ -30,7 +29,7 @@ pipeline {
                 sh '''
                     docker run --name zap \
                         --add-host=host.docker.internal:host-gateway \
-                        -v /path/to/dir/with/passive/scan/yaml:/zap/wrk/:rw
+                        -v $(pwd)/automation:/zap/wrk/:rw
                         -t ghcr.io/zaproxy/zaproxy:stable bash -c \
                         "zap.sh -cmd -addonupdate; zap.sh -cmd -addoninstall communityScripts -addoninstall pscanrulesAlpha -addoninstall pscanrulesBeta -autorun /zap/wrk/passive_scan.yaml" \
                         || true
