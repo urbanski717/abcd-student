@@ -10,7 +10,7 @@ pipeline {
                     cleanWs()
                     git credentialsId: 'github-token', url: 'https://github.com/urbanski717/abcd-student', branch: 'main'
                     sh 'mkdir results'
-                    sh "trufflehog git file://. --only-verified --json > results/trufflehog-output.json || true"
+                    sh "trufflehog git file://. --only-verified --bare || true"
                 }
             }
                 post{
@@ -21,7 +21,7 @@ pipeline {
         }
         stage("[omv] SKAN"){
             steps{
-                sh 'mkdir results'
+                sh 'mkdir results || true'
                 sh 'osv-scanner scan --lockfile package-lock.json --format json --output results/sca-osv-scanner.json || true'
             }
             post{
