@@ -9,6 +9,13 @@ pipeline {
                 script {
                     cleanWs()
                     git credentialsId: 'github-token', url: 'https://github.com/urbanski717/abcd-student', branch: 'main'
+                    sh 'mkdir results_truffle'
+                    sh "trufflehog git file://. --only-verified --json > results_truffle/results_truffle.json || true"
+            post{
+                always{
+                    archiveArtifacts artifacts: 'results_truffle/**/*', fingerprint: true, allowEmptyArchive: true
+                }
+            }
                 }
             }
         }
@@ -48,7 +55,6 @@ pipeline {
             }
             post {
                 always {
-                    archiveArtifacts artifacts: '/zap/wrk/reports/*', fingerprint: true, allowEmptyArchive: true
                     sh '''
                         docker cp zap:/zap/wrk/reports/zap_html_report.html ${WORKSPACE}/results/zap_html_report.html || true
                         docker cp zap:/zap/wrk/reports/zap_xml_report.xml ${WORKSPACE}/results/zap_xml_report.xml || true
