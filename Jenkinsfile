@@ -51,6 +51,7 @@ pipeline {
                     sh '''
                         docker cp zap:/zap/wrk/reports/zap_html_report.html ${WORKSPACE}/results/zap_html_report.html || true
                         docker cp zap:/zap/wrk/reports/zap_xml_report.xml ${WORKSPACE}/results/zap_xml_report.xml || true
+                        archiveArtifacts artifacts: 'results/**/*', fingerprint: true, allowEmptyArchive: true
                         docker stop zap juice-shop 
                         docker rm zap 
                     '''
