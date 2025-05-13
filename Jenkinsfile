@@ -12,11 +12,17 @@ pipeline {
                 }
             }
         }
-        stage('OSV Scan') {
+        stage('SCA scan') {
             steps {
-                sh 'osv-scanner scan --lockfile package-lock.json'
+                sh 'osv-scanner scan --lockfile package-lock.json --format json --output results/sca-osv-scanner.json'
             }
         }
+        post {
+            always {
+                echo 'Archiving results...'
+                archiveArtifacts artifacts: 'results/**/*', fingerprint: true, allowEmptyArchive: true
+        }
+        
         stage('[ZAP] Baseline passive-scan') {
             steps {
                 sh 'mkdir -p results/'
