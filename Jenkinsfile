@@ -17,7 +17,9 @@ pipeline {
                 sh 'osv-scanner scan --lockfile package-lock.json --format json --output results/sca-osv-scanner.json'
             }
             post{
-                archiveArtifacts artifacts: 'results/**/*', fingerprint: true, allowEmptyArchive: true
+                always{
+                    archiveArtifacts artifacts: 'results/**/*', fingerprint: true, allowEmptyArchive: true
+                }
             }
         }
         
