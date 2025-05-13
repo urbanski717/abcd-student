@@ -14,8 +14,7 @@ pipeline {
         }
         stage('Example') {
             steps {
-                echo 'Hello!'
-                sh 'pwd'
+                sh 'syft package-lock.json -o cyclonedx-json'
             }
         }
         stage('[ZAP] Baseline passive-scan') {
@@ -39,9 +38,6 @@ pipeline {
                         -autorun /zap/wrk/passive_scan.yaml" \
                         || true
                 '''   
-            }
-            stage('[SCA] Omvscaner'){
-                sh 'syft package-lock.json -o cyclonedx-json'
             }
             post {
                 always {
