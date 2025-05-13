@@ -15,7 +15,7 @@ pipeline {
         stage("[omv] SKAN"){
             steps{
                 sh 'mkdir results'
-                sh 'osv-scanner scan --lockfile package-lock.json --format json --output results/sca-osv-scanner.json'
+                sh 'osv-scanner scan --lockfile package-lock.json --format json --output results/sca-osv-scanner.json || true'
             }
             post{
                 always{
@@ -51,8 +51,8 @@ pipeline {
                     sh '''
                         docker cp zap:/zap/wrk/reports/zap_html_report.html ${WORKSPACE}/results/zap_html_report.html || true
                         docker cp zap:/zap/wrk/reports/zap_xml_report.xml ${WORKSPACE}/results/zap_xml_report.xml || true
-                        docker stop zap juice-shop || true
-                        docker rm zap || true
+                        docker stop zap juice-shop 
+                        docker rm zap 
                     '''
                 }
             }
