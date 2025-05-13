@@ -11,13 +11,13 @@ pipeline {
                     git credentialsId: 'github-token', url: 'https://github.com/urbanski717/abcd-student', branch: 'main'
                     sh 'mkdir results'
                     sh "trufflehog git file://. --only-verified --json > results/trufflehog-output.json || true"
-            post{
-                always{
-                    archiveArtifacts artifacts: 'results/trufflehog-output.json', fingerprint: true, allowEmptyArchive: true
                 }
             }
+                post{
+                    always{
+                        archiveArtifacts artifacts: 'results/trufflehog-output.json', fingerprint: true, allowEmptyArchive: true
+                    }
                 }
-            }
         }
         stage("[omv] SKAN"){
             steps{
