@@ -10,7 +10,7 @@ pipeline {
                     cleanWs()
                     git credentialsId: 'github-token', url: 'https://github.com/urbanski717/abcd-student', branch: 'main'
                     sh 'mkdir results'
-                    sh "trufflehog git file://. --json --only-verified > results/trufflehog-output.json'"
+                    sh "trufflehog git file://. --json --only-verified > results/trufflehog-output.json"
                 }
             }
                 post{
