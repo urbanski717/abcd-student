@@ -10,12 +10,12 @@ pipeline {
                     cleanWs()
                     git credentialsId: 'github-token', url: 'https://github.com/urbanski717/abcd-student', branch: 'main'
                     sh 'mkdir results'
-                    sh "trufflehog git file://. --since-commit main --only-verified > trufflehog-output.txt "
+                    sh "trufflehog git file://. --json  > trufflehog-output.json "
                 }
             }
                 post{
                     always{
-                        archiveArtifacts artifacts: 'results/trufflehog-output.txt', fingerprint: true, allowEmptyArchive: true
+                        archiveArtifacts artifacts: 'results/trufflehog-output.json', fingerprint: true, allowEmptyArchive: true
                     }
                 }
         }
