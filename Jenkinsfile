@@ -12,9 +12,9 @@ pipeline {
                 }
             }
         }
-        stage('Example') {
+        stage('OSV Scan') {
             steps {
-                sh 'syft package-lock.json -o cyclonedx-json'
+                sh 'osv-scanner scan --lockfile package-lock.json'
             }
         }
         stage('[ZAP] Baseline passive-scan') {
