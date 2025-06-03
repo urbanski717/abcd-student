@@ -19,6 +19,19 @@ pipeline {
                     }
                 }
         }
+        stage('Semgrep') {
+            steps {
+                script {
+                    sh 'semgrep scan --config=auto --output=results/semgrep.json --json'
+                }
+            }
+                post{
+                    always{
+                        archiveArtifacts artifacts: 'results/semgrep.json', fingerprint: true, allowEmptyArchive: true
+                    }
+                }
+        }
+        
         stage("[omv] SKAN"){
             steps{
                 sh 'mkdir results || true'
